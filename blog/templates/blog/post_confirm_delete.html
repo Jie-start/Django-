@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}删除文章 - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="delete-confirm">
+    <div class="confirm-box">
+        <h2><i class="fas fa-exclamation-triangle"></i> 删除文章</h2>
+        <p class="warning">确定要删除文章 "{{ post.title }}" 吗？</p>
+        <p class="note">此操作不可恢复！</p>
+        
+        <form method="post" class="delete-form">
+            {% csrf_token %}
+            <div class="button-group">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> 确定删除
+                </button>
+                <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-cancel">
+                    <i class="fas fa-times"></i> 取消
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

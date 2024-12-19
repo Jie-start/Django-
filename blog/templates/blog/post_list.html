@@ -1,0 +1,54 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}文章列表 - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="post-list">
+    <h1>文章列表</h1>
+
+    <div class="search-form">
+        <form method="get" action="{% url 'home' %}">
+            <input type="text" name="q" placeholder="输入关键词搜索文章..." value="{{ request.GET.q }}">
+            <button type="submit">搜索</button>
+        </form>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="actions">
+        <a href="{% url 'post_create' %}" class="create-btn">
+            <i class="fas fa-plus"></i> 写新文章
+        </a>
+    </div>
+    {% endif %}
+
+    <div class="posts">
+        {% for post in posts %}
+        <article class="post-item">
+            <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+            {% if post.summary %}
+                <div class="summary">{{ post.summary }}</div>
+            {% endif %}
+            <div class="meta">
+                <span class="date">
+                    <i class="far fa-calendar-alt"></i> 
+                    {{ post.created_at|date:"Y年m月d日 H:i" }}
+                </span>
+                {% if post.tags.all %}
+                <div class="tags">
+                    <i class="fas fa-tags"></i>
+                    {% for tag in post.tags.all %}
+                        <span class="tag">{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </article>
+        {% empty %}
+        <div class="no-posts">
+            <h3>暂无文章</h3>
+            <p>还没有发布任何文章，开始写作吧！</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,52 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}注册 - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="auth-form">
+    <h2>注册</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <label for="id_username">用户名:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+            <span class="error">{{ form.username.errors.0 }}</span>
+            {% endif %}
+            <small>必填。150个字符或更少。只能包含字母、数字和 @/./+/-/_ 字符。</small>
+        </p>
+        <p>
+            <label for="id_email">电子邮箱:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <span class="error">{{ form.email.errors.0 }}</span>
+            {% endif %}
+        </p>
+        <p>
+            <label for="id_password1">密码:</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+            <span class="error">{{ form.password1.errors.0 }}</span>
+            {% endif %}
+            <small>
+                <ul>
+                    <li>密码不能与个人信息太相似</li>
+                    <li>密码必须至少包含8个字符</li>
+                    <li>密码不能是常见密码</li>
+                    <li>密码不能全是数字</li>
+                </ul>
+            </small>
+        </p>
+        <p>
+            <label for="id_password2">确认密码:</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+            <span class="error">{{ form.password2.errors.0 }}</span>
+            {% endif %}
+            <small>请再次输入密码进行确认</small>
+        </p>
+        <button type="submit">注册</button>
+    </form>
+    <p>已有账号？<a href="{% url 'login' %}">立即登录</a></p>
+</div>
+{% endblock %} 

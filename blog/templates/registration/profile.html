@@ -1,0 +1,9 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<div class="profile">
+    <h2>个人资料</h2>
+    <p>用户名: {{ user.username }}</p>
+    <p>邮箱: {{ user.email }}</p>
+</div>
+{% endblock %} 
